@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MoneyManager_DesktopApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MoneyManager_DesktopApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="MoneyManager_DesktopApp">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+<!-- <StackPanel> -->
+<!--     <Button Command="{Binding Btn1}">Login Window</Button> -->
+<!--     ~1~ <TextBlock Text="Login"></TextBlock> @1@ -->
+<!--     ~1~ <TextBox Text="{Binding Login}"></TextBox> @1@ -->
+<!--     ~1~ <TextBlock Text="Password"></TextBlock> @1@ -->
+<!--     ~1~ <TextBox Text="{Binding Password}" PasswordChar="*"></TextBox> @1@ -->
+<!--     ~1~ @1@ -->
+<!--     ~1~ <Button Command="{Binding LoginButton}">Login</Button> @1@ -->
+<!--     ~1~ <TextBlock Text="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center"/> @1@ -->
+<!-- </StackPanel> -->
+    
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.15*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Background="Beige">
+            <Button Name="LoginWindow" Content="Login" Command="{Binding OpenLoginWindow}"></Button>
+            <!-- <Button Content="Grafik planowany" Command="{Binding OpenView2}"></Button> -->
+        </StackPanel>
+        <ContentControl Name="MainView" Content="{Binding MainViewContent}" Grid.Column="1"></ContentControl>
+    </Grid>
+
+</Window>
