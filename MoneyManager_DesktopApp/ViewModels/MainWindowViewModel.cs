@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using Microsoft.VisualBasic;
 using MoneyManager_DesktopApp.Views;
+using Splat;
 
 namespace MoneyManager_DesktopApp.ViewModels;
 
@@ -22,7 +23,10 @@ public class MainWindowViewModel : INotifyPropertyChanged
             _loginWindow.DataContext = new LoginWindowViewModel();
             _loginWindow.Show();
         }
-
+        
+        var toaster = Locator.Current.GetService<JwtTokenService>();
+        var s = toaster.Token;
+        
         //MainViewContent = new LoginTab();
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LoginWindow)));
     }

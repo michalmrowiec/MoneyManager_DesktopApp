@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
+using Splat;
 
 namespace MoneyManager_DesktopApp.ViewModels;
 
@@ -48,6 +50,13 @@ public class LoginWindowViewModel : INotifyPropertyChanged
             var result = await http.PostAsJsonAsync(url, new {Email = Login, Password = Password});
             Status = result.StatusCode.ToString();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
+            var toaster = Locator.Current.GetService<JwtTokenService>();
+            toaster.Token = result.StatusCode.ToString();
+            // if (result.StatusCode == HttpStatusCode.OK)
+            // {
+            //     var toaster = Locator.Current.GetService<JwtTokenService>();
+            //     toaster.Token = result.ToString();
+            // }
         }
         catch (Exception e)
         {
