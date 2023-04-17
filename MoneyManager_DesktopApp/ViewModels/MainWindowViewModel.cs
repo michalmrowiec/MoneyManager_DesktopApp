@@ -38,6 +38,17 @@ public class MainWindowViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    private void OpenDashboardView()
+    {
+        MainViewContent = new Dashboard();
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MainViewContent)));
+    }
+    private void OpenStartTabView()
+    {
+        MainViewContent = new StartTab();
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MainViewContent)));
+    }
+    
     protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
         if (EqualityComparer<T>.Default.Equals(field, value)) return false;

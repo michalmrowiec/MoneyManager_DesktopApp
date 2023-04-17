@@ -34,6 +34,8 @@
 
         <StackPanel Grid.Column="0" Background="Beige">
             <Button Name="LoginWindow" Content="Login" Command="{Binding OpenLoginWindow}"></Button>
+            <Button Content="Start" Command="{Binding OpenStartTabView}"></Button>
+            <Button Content="Dashboard" Command="{Binding OpenDashboardView}"></Button>
             <!-- <Button Content="Grafik planowany" Command="{Binding OpenView2}"></Button> -->
         </StackPanel>
         <ContentControl Name="MainView" Content="{Binding MainViewContent}" Grid.Column="1"></ContentControl>
