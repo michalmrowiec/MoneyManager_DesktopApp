@@ -5,7 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using MoneyManager_DesktopApp.Models.ViewModels;
+using Newtonsoft.Json;
+using SkiaSharp.Internals;
 using Splat;
+using System.Configuration;
 
 namespace MoneyManager_DesktopApp.ViewModels;
 
@@ -47,11 +52,16 @@ public class LoginWindowViewModel : INotifyPropertyChanged
         var url = @"https://moneymanager.hostingasp.pl/api/account/login";
         try
         {
+            var toaster = Locator.Current.GetService<JwtTokenService>();
+            
+            //http.DefaultRequestHeaders.Add(toaster.ApiKey().Item1, toaster.ApiKey().Item2);
+            http.DefaultRequestHeaders.Add("X-Api-Key", ConfigurationManager.AppSettings["X-Api-Key"]);
             var result = await http.PostAsJsonAsync(url, new {Email = Login, Password = Password});
             Status = result.StatusCode.ToString();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
-            var toaster = Locator.Current.GetService<JwtTokenService>();
-            toaster.Token = result.StatusCode.ToString();
+            UserTokenVM userToken = JsonConvert.DeserializeObject<UserTokenVM>(await result.Content.ReadAsStringAsync()) ?? new();
+            toaster.Token = userToken.Token;
+            Console.WriteLine(toaster.Token);
             // if (result.StatusCode == HttpStatusCode.OK)
             // {
             //     var toaster = Locator.Current.GetService<JwtTokenService>();

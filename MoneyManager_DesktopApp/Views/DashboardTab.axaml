@@ -2,9 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:MoneyManager_DesktopApp.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="MoneyManager_DesktopApp.Views.Dashboard">
-    <Grid Background="Magenta">
-        <TextBox>WELCCOSDG TO saDFASLG</TextBox>
-    </Grid>
+             x:Class="MoneyManager_DesktopApp.Views.Dashboard"
+             x:DataType="vm:DashboardTabViewModel">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:DashboardTabViewModel />
+    </Design.DataContext>
+
+    <DockPanel LastChildFill="True">
+        <TextBlock Text="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        <Button IsEnabled="True" Command="{Binding GetAllRecords}">Dow</Button>
+
+        <Button Command="{Binding TestBtn}">Login</Button>
+
+        <DataGrid Items="{Binding Records}" AutoGenerateColumns="True">
+<DataGrid.Columns></DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </UserControl>

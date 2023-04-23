@@ -8,6 +8,9 @@ using Microsoft.VisualBasic;
 using MoneyManager_DesktopApp.Views;
 using Splat;
 
+//using System.Configuration
+//ConfiguratinManager.AppSettings["key"]
+
 namespace MoneyManager_DesktopApp.ViewModels;
 
 public class MainWindowViewModel : INotifyPropertyChanged
