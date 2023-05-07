@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using MoneyManager_DesktopApp.Models.ViewModels.Interfaces;
 
@@ -21,4 +22,5 @@ namespace MoneyManager_DesktopApp.Models.ViewModels
         public int? CategoryId { get; set; }
         public CategoryVM? Category { get; set; }
     }
+    
 }

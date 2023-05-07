@@ -1,34 +1,25 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+using System.Reactive;
+using CommunityToolkit.Mvvm.ComponentModel;
 using MoneyManager_DesktopApp.Models.ViewModels;
-using MoneyManager_DesktopApp.Views;
+using MoneyManager_DesktopApp.Services;
 using Newtonsoft.Json;
 using Splat;
-using JsonSerializer = System.Text.Json.JsonSerializer;
-using System.Configuration;
+
 
 namespace MoneyManager_DesktopApp.ViewModels;
 
-public class DashboardTabViewModel : INotifyPropertyChanged
+public class DashboardTabViewModel : ViewModelBase, INotifyPropertyChanged //ObservableObject
 {
     //public List<RecordVM> Records { get; set; }
     public ObservableCollection<RecordVM> Records { get; set; }
     public event PropertyChangedEventHandler? PropertyChanged;
-    public int Status { get; set; } = 65441;
-    public void TestBtn()
-    {
-        Status++;
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Records)));
-
-    }
 
     public async void GetAllRecords()
     {
@@ -40,14 +31,20 @@ public class DashboardTabViewModel : INotifyPropertyChanged
             
             using var request = new HttpRequestMessage(HttpMethod.Get, uri);
             var token = toaster.Token;
-            //request.Headers.Add(toaster.ApiKey().Item1, toaster.ApiKey().Item2);
             request.Headers.Add("X-Api-Key", ConfigurationManager.AppSettings["X-Api-Key"]);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var result = await http.SendAsync(request);
+            //var result = await http.SendAsync(request);
 
+            var result = await Locator.Current.GetService<IHttpClientService>().GetListOfItems(uri);
             var recJson = await result.Content.ReadAsStringAsync();
-            Records = JsonConvert.DeserializeObject<ObservableCollection<RecordVM>>(recJson) ?? new ObservableCollection<RecordVM>();
+            Records = JsonConvert.DeserializeObject<ObservableCollection<RecordVM>>(recJson) ?? new();
+            
+            foreach (var recordVm in Records)
+            {
+                recordVm.CategoryName = recordVm.Category?.Name;
+            }
+            
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Records)));
         }
         catch (Exception e)

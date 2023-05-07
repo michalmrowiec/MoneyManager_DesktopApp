@@ -3,19 +3,16 @@
         xmlns:vm="using:MoneyManager_DesktopApp.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="160"
         x:Class="MoneyManager_DesktopApp.Views.LoginWindow"
         x:DataType="vm:LoginWindowViewModel"
         Title="LoginWindow">
     
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:LoginWindowViewModel/>
     </Design.DataContext>
 
     <StackPanel>
-        <Button Command="{Binding TestBtn}">Login</Button>
         <TextBlock Text="Login"></TextBlock>
         <TextBox Text="{Binding Login}"></TextBox>
         <TextBlock Text="Password"></TextBlock>

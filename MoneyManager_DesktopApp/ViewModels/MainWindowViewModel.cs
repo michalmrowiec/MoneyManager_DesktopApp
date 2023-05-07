@@ -17,20 +17,41 @@ public class MainWindowViewModel : INotifyPropertyChanged
 {
     public object MainViewContent { get; set; }
     private LoginWindow? _loginWindow;
+    private AddWindow? _addWindow;
 
     public void OpenLoginWindow()
     {
-        if (_loginWindow is null)
+        // if (_loginWindow is null)
+        if (true)
         {
-            _loginWindow = new LoginWindow();
-            _loginWindow.DataContext = new LoginWindowViewModel();
+            _loginWindow = new LoginWindow
+            {
+                DataContext = new LoginWindowViewModel(),
+                Width = 300,
+                Height = 150
+            };
             _loginWindow.Show();
         }
         
         var toaster = Locator.Current.GetService<JwtTokenService>();
         var s = toaster.Token;
         
-        //MainViewContent = new LoginTab();
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LoginWindow)));
+    }
+    
+    public void OpenAddWindow()
+    {
+        if (_addWindow is null)
+        {
+            _addWindow = new AddWindow
+            {
+                DataContext = new AddWindowViewModel(),
+                Width = 300,
+                Height = 150
+            };
+            _addWindow.Show();
+        }
+
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LoginWindow)));
     }
     

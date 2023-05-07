@@ -3,25 +3,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:MoneyManager_DesktopApp.ViewModels"
+             xmlns:local="clr-namespace:MoneyManager_DesktopApp.Models;assembly=MoneyManager_DesktopApp"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MoneyManager_DesktopApp.Views.Dashboard"
              x:DataType="vm:DashboardTabViewModel">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:DashboardTabViewModel />
     </Design.DataContext>
 
+    <!-- <DockPanel LastChildFill="True"> -->
+    <!--     <Button Command="{Binding GetAllRecords}">Dow</Button> -->
+    <!--      -->
+    <!--     <DataGrid Items="{Binding Records}" AutoGenerateColumns="True"> -->
+    <!--     </DataGrid> -->
+    <!-- </DockPanel> -->
     <DockPanel LastChildFill="True">
-        <TextBlock Text="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-        <Button IsEnabled="True" Command="{Binding GetAllRecords}">Dow</Button>
-
-        <Button Command="{Binding TestBtn}">Login</Button>
-
-        <DataGrid Items="{Binding Records}" AutoGenerateColumns="True">
-<DataGrid.Columns></DataGrid.Columns>
+        <Button DockPanel.Dock="Top" Command="{Binding GetAllRecords}">Dow</Button>
+        
+        <DataGrid DockPanel.Dock="Bottom" Items="{Binding Records}" AutoGenerateColumns="False" VerticalAlignment="Stretch" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Kategoria" Binding="{Binding CategoryName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Kwota" Binding="{Binding Amount}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Data transakcji" Binding="{Binding TransactionDate}"></DataGridTextColumn>
+            </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
 </UserControl>

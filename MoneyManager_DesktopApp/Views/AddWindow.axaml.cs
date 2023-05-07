@@ -1,23 +1,21 @@
-using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using MoneyManager_DesktopApp.ViewModels;
-using MoneyManager_DesktopApp.Models.Entities;
 
 namespace MoneyManager_DesktopApp.Views;
 
-public partial class Dashboard : UserControl
+public partial class AddWindow : Window
 {
-    public Dashboard()
+    public AddWindow()
     {
         InitializeComponent();
-        DataContext = new DashboardTabViewModel();
+#if DEBUG
+        this.AttachDevTools();
+#endif
     }
 
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
     }
-    
 }
