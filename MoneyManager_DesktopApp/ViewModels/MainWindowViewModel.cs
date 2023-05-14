@@ -41,13 +41,14 @@ public class MainWindowViewModel : INotifyPropertyChanged
     
     public void OpenAddWindow()
     {
-        if (_addWindow is null)
+        //if (_addWindow is null)
+        if(true)
         {
             _addWindow = new AddWindow
             {
                 DataContext = new AddWindowViewModel(),
-                Width = 300,
-                Height = 150
+                Width = 400,
+                Height = 450
             };
             _addWindow.Show();
         }

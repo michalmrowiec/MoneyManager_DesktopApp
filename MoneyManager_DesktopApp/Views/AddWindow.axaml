@@ -2,16 +2,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:MoneyManager_DesktopApp.ViewModels"
+        xmlns:vm="using:MoneyManager_DesktopApp.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="MoneyManager_DesktopApp.Views.AddWindow"
+        x:DataType="vm:AddWindowViewModel"
         Title="AddWindow">
-    
+
     <Design.DataContext>
-        <viewModels:AddWindowViewModel/>
+        <vm:AddWindowViewModel/>
     </Design.DataContext>
-    
+
     <StackPanel>
+        <TextBlock>Nazwa</TextBlock>
+        <TextBox Watermark="" Text="{Binding AddRecord.Name}"></TextBox>
+        
+        <ComboBox x:Name="fontComboBox" SelectedItem="{Binding SelCat}" Items="{Binding Categories}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" FontFamily="{Binding}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        
+        <TextBlock>Kwota</TextBlock>
+        <!-- <TextBox Watermark="" Text="{Binding AddRecord.Amount}"></TextBox> -->
+
+        <NumericUpDown Value="{Binding AddRecord.Amount}"></NumericUpDown>
+        <!-- <TextBox IsReadOnly="True" Text="{Binding waht}"></TextBox> -->
+        
+        <DatePicker SelectedDate="{Binding TransactionDatePicker}"></DatePicker>
+
         <Button Content="Submit"></Button>
+        <Button Command="{Binding GetCategories}">Refresh</Button>
     </StackPanel>
 </Window>
