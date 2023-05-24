@@ -3,36 +3,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:MoneyManager_DesktopApp.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="285"
         x:Class="MoneyManager_DesktopApp.Views.AddWindow"
         x:DataType="vm:AddWindowViewModel"
-        Title="AddWindow">
+        Title="Formularz rekordu">
 
     <Design.DataContext>
-        <vm:AddWindowViewModel/>
+        <vm:AddWindowViewModel />
     </Design.DataContext>
 
-    <StackPanel>
+    <StackPanel Margin="5">
         <TextBlock>Nazwa</TextBlock>
         <TextBox Watermark="" Text="{Binding AddRecord.Name}"></TextBox>
-        
-        <ComboBox x:Name="fontComboBox" SelectedItem="{Binding SelCat}" Items="{Binding Categories}">
+
+        <TextBlock Margin="0 5 0 0">Kategoria</TextBlock>
+        <ComboBox x:Name="Categories"
+                  SelectedItem="{Binding SelCat}"
+                  Items="{Binding Categories}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" FontFamily="{Binding}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        
-        <TextBlock>Kwota</TextBlock>
-        <!-- <TextBox Watermark="" Text="{Binding AddRecord.Amount}"></TextBox> -->
 
+        <TextBlock Margin="0 5 0 0">Kwota</TextBlock>
         <NumericUpDown Value="{Binding AddRecord.Amount}"></NumericUpDown>
-        <!-- <TextBox IsReadOnly="True" Text="{Binding waht}"></TextBox> -->
-        
+
+        <TextBlock Margin="0 5 0 0">Data transakcji</TextBlock>
         <DatePicker SelectedDate="{Binding TransactionDatePicker}"></DatePicker>
 
-        <Button Content="Submit"></Button>
-        <Button Command="{Binding GetCategories}">Refresh</Button>
+        <Button Margin="0 5 0 0"
+                Width="80"
+                Height="35"
+                FontSize="15"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Right"
+                Command="{Binding CreateRecord}"
+                Content="Submit">
+        </Button>
     </StackPanel>
 </Window>

@@ -3,22 +3,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:MoneyManager_DesktopApp.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="160"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="170"
         x:Class="MoneyManager_DesktopApp.Views.LoginWindow"
         x:DataType="vm:LoginWindowViewModel"
-        Title="LoginWindow">
+        Title="Logowanie">
     
     <Design.DataContext>
         <vm:LoginWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel>
-        <TextBlock Text="Login"></TextBlock>
+    <StackPanel Margin="5">
+        <TextBlock Text="Email"></TextBlock>
         <TextBox Text="{Binding Login}"></TextBox>
-        <TextBlock Text="Password"></TextBlock>
+        <TextBlock Margin="0 5 0 0" Text="Password"></TextBlock>
         <TextBox Text="{Binding Password}" PasswordChar="*"></TextBox>
     
-        <Button Command="{Binding LoginButton}">Login</Button>
-        <TextBlock Text="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Margin="0 5 0 0" Command="{Binding LoginButton}">Zaloguj</Button>
+        <TextBlock Margin="0 2 0 0" FontSize="16" Text="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </StackPanel>
 </Window>

@@ -5,12 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
 using MoneyManager_DesktopApp.Models.ViewModels;
 using Newtonsoft.Json;
-using SkiaSharp.Internals;
 using Splat;
 using System.Configuration;
+using System.Threading;
+using System.Threading.Tasks;
+using MoneyManager_DesktopApp.Services;
 
 namespace MoneyManager_DesktopApp.ViewModels;
 
@@ -18,19 +19,23 @@ public class LoginWindowViewModel : INotifyPropertyChanged
 {
     private string _login;
     private string _password;
-    public string Status { get; set; } = "Wait";
+    private FormsInfo _formsInfo = Locator.Current.GetService<FormsInfo>();
+
+    public string Status { get; set; } = "Wpisz email i hasło";
+
     public string Login
     {
-        get { return _login;}
+        get { return _login; }
         set
         {
             _login = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Login)));
         }
     }
+
     public string Password
     {
-        get { return _password;}
+        get { return _password; }
         set
         {
             _password = value;
@@ -43,40 +48,45 @@ public class LoginWindowViewModel : INotifyPropertyChanged
         Status = "Clicked";
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
     }
+
     public async void LoginButton()
     {
-        Status = "Loging";
+        Status = "Logowanie";
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
 
+        HttpResponseMessage result;
         var http = new HttpClient();
         var url = @"https://moneymanager.hostingasp.pl/api/account/login";
         try
         {
             var toaster = Locator.Current.GetService<JwtTokenService>();
-            
-            //http.DefaultRequestHeaders.Add(toaster.ApiKey().Item1, toaster.ApiKey().Item2);
+
             http.DefaultRequestHeaders.Add("X-Api-Key", ConfigurationManager.AppSettings["X-Api-Key"]);
-            var result = await http.PostAsJsonAsync(url, new {Email = Login, Password = Password});
-            Status = result.StatusCode.ToString();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
-            UserTokenVM userToken = JsonConvert.DeserializeObject<UserTokenVM>(await result.Content.ReadAsStringAsync()) ?? new();
+            result = await http.PostAsJsonAsync(url, new { Email = Login, Password = Password });
+            UserTokenVM userToken =
+                JsonConvert.DeserializeObject<UserTokenVM>(await result.Content.ReadAsStringAsync()) ?? new();
             toaster.Token = userToken.Token;
-            Console.WriteLine(toaster.Token);
-            // if (result.StatusCode == HttpStatusCode.OK)
-            // {
-            //     var toaster = Locator.Current.GetService<JwtTokenService>();
-            //     toaster.Token = result.ToString();
-            // }
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                Status = "Zalogowano";
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
+                await Task.Delay(1000);
+                _formsInfo.LoginWindowIsOpen = false;
+            }
+            else if (result.StatusCode == HttpStatusCode.BadRequest)
+            {
+                Status = "Błędny email lub hasło";
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
+            }
+
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             Status = e.Message;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
             throw;
         }
-
-
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

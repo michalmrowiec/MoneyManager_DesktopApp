@@ -21,6 +21,21 @@
     <DockPanel LastChildFill="True">
         <Button DockPanel.Dock="Top" Command="{Binding GetAllRecords}">Dow</Button>
         
+        <ComboBox x:Name="Years"
+                  SelectedItem="{Binding SelectedYear}"
+                  Items="{Binding YearsToSelect}">
+        </ComboBox>
+        
+        <ComboBox x:Name="Months"
+                  SelectedItem="{Binding SelectedMonth}"
+                  Items="{Binding MonthsToSelect}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" FontFamily="{Binding}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        
         <DataGrid DockPanel.Dock="Bottom" Items="{Binding Records}" AutoGenerateColumns="False" VerticalAlignment="Stretch" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"></DataGridTextColumn>

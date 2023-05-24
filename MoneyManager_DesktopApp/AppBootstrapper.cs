@@ -9,6 +9,7 @@ public class AppBootstrapper
     { 
         Locator.CurrentMutable.RegisterConstant(new JwtTokenService(), typeof(JwtTokenService));
         Locator.CurrentMutable.RegisterConstant(new HttpClientService(), typeof(IHttpClientService));
+        Locator.CurrentMutable.RegisterConstant(new FormsInfo(), typeof(FormsInfo));
         // Other registrations go here...
     } 
 }

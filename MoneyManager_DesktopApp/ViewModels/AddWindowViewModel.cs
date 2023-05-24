@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using MoneyManager_DesktopApp.Models.ViewModels;
 using MoneyManager_DesktopApp.Services;
 using Newtonsoft.Json;
+using Splat;
+using Tmds.DBus;
 
 namespace MoneyManager_DesktopApp.ViewModels;
 
 public class AddWindowViewModel : INotifyPropertyChanged
 {
     private RecordVM _addRecord;
+    private FormsInfo _formsInfo = Locator.Current.GetService<FormsInfo>();
+
 
     public RecordVM AddRecord
     {
         get => _addRecord;
         set => _addRecord = value;
     }
-
+    
     public ObservableCollection<CategoryVM> Categories { get; set; } = new();
     public CategoryVM SelCat { get; set; }
 
@@ -36,13 +42,13 @@ public class AddWindowViewModel : INotifyPropertyChanged
     {
         AddRecord = new RecordVM();
         AddRecord.TransactionDate = DateTime.Today;
+        GetCategories();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
     
     public async Task GetCategories()
     {
-        //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AddRecord)));
         HttpClientService http = new();
         var httpResponse = await http.GetListOfItems(@"https://moneymanager.hostingasp.pl/api/category");
         var recJson = await httpResponse.Content.ReadAsStringAsync();
@@ -51,6 +57,20 @@ public class AddWindowViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Categories)));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelCat)));
     }
+
+    public async Task CreateRecord()
+    {
+        AddRecord.CategoryId = SelCat.Id;
+        HttpClientService http = new();
+        var httpResponse = await http.CreateItem(AddRecord,@"https://moneymanager.hostingasp.pl/api/tracker");
+        var res = httpResponse.StatusCode;
+
+        if (httpResponse.StatusCode == HttpStatusCode.Created)
+        {
+            _formsInfo.RecordWindowIsOpen = false;
+        }
+    }
+    
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
