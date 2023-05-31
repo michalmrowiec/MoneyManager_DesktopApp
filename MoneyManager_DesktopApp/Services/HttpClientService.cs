@@ -74,6 +74,12 @@ public class HttpClientService : IHttpClientService
 
     public async Task<HttpResponseMessage> UpdateItem<T>(T record, string uri) where T : IId
     {
-        throw new NotImplementedException();
+        var postJson = new StringContent(JsonConvert.SerializeObject(record), Encoding.UTF8, "application/json");
+        using var request = new HttpRequestMessage(HttpMethod.Put, uri);
+
+        request.Headers.Add("X-Api-Key", ConfigurationManager.AppSettings["X-Api-Key"]);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _jwtToken.Token);
+        request.Content = postJson;
+        return await _http.SendAsync(request);
     }
 }

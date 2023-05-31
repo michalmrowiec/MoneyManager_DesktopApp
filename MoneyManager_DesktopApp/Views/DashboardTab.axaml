@@ -19,13 +19,16 @@
     <!--     </DataGrid> -->
     <!-- </DockPanel> -->
     <DockPanel LastChildFill="True">
-        <Button DockPanel.Dock="Top" Command="{Binding GetAllRecords}">Dow</Button>
+        <!-- <Button DockPanel.Dock="Top" Command="{Binding GetAllRecords}">Dow</Button> -->
+        <TextBlock DockPanel.Dock="Top" Text="{Binding SumOfCurrentMonth}"></TextBlock>
         
+        <Button DockPanel.Dock="Top" Command="{Binding Update}">Edytuj</Button>
+
         <ComboBox x:Name="Years"
                   SelectedItem="{Binding SelectedYear}"
                   Items="{Binding YearsToSelect}">
         </ComboBox>
-        
+
         <ComboBox x:Name="Months"
                   SelectedItem="{Binding SelectedMonth}"
                   Items="{Binding MonthsToSelect}">
@@ -35,11 +38,12 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        
-        <DataGrid DockPanel.Dock="Bottom" Items="{Binding Records}" AutoGenerateColumns="False" VerticalAlignment="Stretch" >
+
+        <DataGrid DockPanel.Dock="Bottom" Items="{Binding Records}" AutoGenerateColumns="False"
+                  VerticalAlignment="Stretch" SelectedItem="{Binding SelectedRecord}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Kategoria" Binding="{Binding CategoryName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Kategoria" Binding="{Binding Category.Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Kwota" Binding="{Binding Amount}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Data transakcji" Binding="{Binding TransactionDate}"></DataGridTextColumn>
             </DataGrid.Columns>

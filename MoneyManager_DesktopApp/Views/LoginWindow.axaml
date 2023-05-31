@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="170"
         x:Class="MoneyManager_DesktopApp.Views.LoginWindow"
         x:DataType="vm:LoginWindowViewModel"
-        Title="Logowanie">
+        Title="Logowanie"
+        Icon="/Assets/mm.ico">
     
     <Design.DataContext>
         <vm:LoginWindowViewModel/>

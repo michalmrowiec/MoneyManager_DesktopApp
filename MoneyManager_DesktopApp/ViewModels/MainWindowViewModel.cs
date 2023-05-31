@@ -70,7 +70,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             _formsInfo.OnChange += _addWindow.Close;
         }
 
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LoginWindow)));
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AddWindow)));
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -21,14 +22,15 @@ public class AddWindowViewModel : INotifyPropertyChanged
 {
     private RecordVM _addRecord;
     private FormsInfo _formsInfo = Locator.Current.GetService<FormsInfo>();
-
+    private bool _updateWindow = false;
+    public string Status { get; set; } = "";
 
     public RecordVM AddRecord
     {
         get => _addRecord;
         set => _addRecord = value;
     }
-    
+
     public ObservableCollection<CategoryVM> Categories { get; set; } = new();
     public CategoryVM SelCat { get; set; }
 
@@ -45,32 +47,60 @@ public class AddWindowViewModel : INotifyPropertyChanged
         GetCategories();
     }
 
+    public AddWindowViewModel(RecordVM recordToFill)
+    {
+        _updateWindow = true;
+        AddRecord = recordToFill;
+        GetCategories();
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
-    
+
     public async Task GetCategories()
     {
         HttpClientService http = new();
         var httpResponse = await http.GetListOfItems(@"https://moneymanager.hostingasp.pl/api/category");
         var recJson = await httpResponse.Content.ReadAsStringAsync();
         Categories = JsonConvert.DeserializeObject<ObservableCollection<CategoryVM>>(recJson) ?? new();
-        SelCat = Categories.First();
+
+        if (AddRecord?.Category != null)
+            SelCat = Categories.First(x => x.Id == AddRecord.CategoryId);
+        else
+            SelCat = Categories.First();
+        
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Categories)));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelCat)));
     }
 
     public async Task CreateRecord()
     {
-        AddRecord.CategoryId = SelCat.Id;
+        HttpResponseMessage? httpResponse = null;
         HttpClientService http = new();
-        var httpResponse = await http.CreateItem(AddRecord,@"https://moneymanager.hostingasp.pl/api/tracker");
-        var res = httpResponse.StatusCode;
 
-        if (httpResponse.StatusCode == HttpStatusCode.Created)
+        if (_updateWindow)
         {
-            _formsInfo.RecordWindowIsOpen = false;
+            AddRecord.CategoryId = SelCat.Id;
+            httpResponse = await http.UpdateItem(AddRecord, @"https://moneymanager.hostingasp.pl/api/tracker");
         }
+        else
+        {
+            AddRecord.CategoryId = SelCat.Id;
+            httpResponse = await http.CreateItem(AddRecord, @"https://moneymanager.hostingasp.pl/api/tracker");
+        }
+
+
+        if (httpResponse?.StatusCode == HttpStatusCode.Created)
+            Status = "Utworzono";
+        else if (httpResponse?.StatusCode == HttpStatusCode.OK)
+            Status = "Zmodyfikowano";
+        else
+            Status = httpResponse?.StatusCode.ToString();
+
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelCat)));
+        await Task.Delay(500);
+        _formsInfo.RecordWindowIsOpen = false;
     }
-    
+
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

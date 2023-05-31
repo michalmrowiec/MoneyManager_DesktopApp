@@ -6,29 +6,36 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="MoneyManager_DesktopApp.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/mm.ico"
         Title="MoneyManager_DesktopApp">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
 
-    
     <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.15*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0.15*" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" >
+        <StackPanel Grid.Column="0">
             <StackPanel.Background>
                 <LinearGradientBrush>
-                    <GradientStop Offset="0" Color="#FF0000"/>
-                    <GradientStop Offset="1" Color="#0000FF"/>
+                    <GradientStop Offset="0" Color="MidnightBlue" />
+                    <GradientStop Offset="1" Color="Purple" />
                 </LinearGradientBrush>
             </StackPanel.Background>
-            <Button Margin="5 5 0 0" CornerRadius="5" Name="LoginWindow" Content="Zaloguj" Command="{Binding OpenLoginWindow}">
+            <Button Margin="5 5 5 0"
+                    HorizontalAlignment="Stretch"
+                    Height="70"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center" 
+                    CornerRadius="5" 
+                    Name="LoginWindow"
+                    Content="Zaloguj"
+                    Command="{Binding OpenLoginWindow}">
                 <Button.Background>
                     <SolidColorBrush Color="Azure" Opacity="0.8"></SolidColorBrush>
                 </Button.Background>
@@ -38,7 +45,14 @@
                     </Style>
                 </Button.Styles>
             </Button>
-            <Button Margin="5 5 0 0" CornerRadius="5" Content="Start" Command="{Binding OpenStartTabView}">
+            <Button Margin="5 5 5 0"
+                    HorizontalAlignment="Stretch"
+                    Height="70"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center" 
+                    CornerRadius="5"
+                    Content="Start"
+                    Command="{Binding OpenStartTabView}">
                 <Button.Background>
                     <SolidColorBrush Color="Azure" Opacity="0.8"></SolidColorBrush>
                 </Button.Background>
@@ -48,7 +62,15 @@
                     </Style>
                 </Button.Styles>
             </Button>
-            <Button Margin="5 5 0 0" CornerRadius="5" Name="AddWindow" Content="Dodaj" Command="{Binding OpenAddWindow}">
+            <Button Margin="5 5 5 0"
+                    HorizontalAlignment="Stretch"
+                    Height="70"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center" 
+                    CornerRadius="5"
+                    Name="AddWindow"
+                    Content="Dodaj"
+                    Command="{Binding OpenAddWindow}">
                 <Button.Background>
                     <SolidColorBrush Color="Azure" Opacity="0.8"></SolidColorBrush>
                 </Button.Background>
@@ -58,7 +80,14 @@
                     </Style>
                 </Button.Styles>
             </Button>
-            <Button Margin="5 5 0 0" CornerRadius="5" Content="Panel" Command="{Binding OpenDashboardView}">
+            <Button Margin="5 5 5 0"
+                    HorizontalAlignment="Stretch"
+                    Height="70"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center" 
+                    CornerRadius="5"
+                    Content="Panel"
+                    Command="{Binding OpenDashboardView}">
                 <Button.Background>
                     <SolidColorBrush Color="Azure" Opacity="0.8"></SolidColorBrush>
                 </Button.Background>
@@ -68,8 +97,6 @@
                     </Style>
                 </Button.Styles>
             </Button>
-            
-            
         </StackPanel>
         <ContentControl Name="MainView" Content="{Binding MainViewContent}" Grid.Column="1"></ContentControl>
     </Grid>

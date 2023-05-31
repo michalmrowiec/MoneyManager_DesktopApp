@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="285"
         x:Class="MoneyManager_DesktopApp.Views.AddWindow"
         x:DataType="vm:AddWindowViewModel"
-        Title="Formularz rekordu">
+        Title="Formularz rekordu"
+        Icon="/Assets/mm.ico">
 
     <Design.DataContext>
         <vm:AddWindowViewModel />
@@ -43,5 +44,6 @@
                 Command="{Binding CreateRecord}"
                 Content="Submit">
         </Button>
+        <TextBlock Margin="0 2 0 0" FontSize="16" Text="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </StackPanel>
 </Window>

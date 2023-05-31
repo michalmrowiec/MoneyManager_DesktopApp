@@ -51,14 +51,14 @@ public class LoginWindowViewModel : INotifyPropertyChanged
 
     public async void LoginButton()
     {
-        Status = "Logowanie";
+        Status = "Logowanie...";
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
 
         HttpResponseMessage result;
-        var http = new HttpClient();
         var url = @"https://moneymanager.hostingasp.pl/api/account/login";
         try
         {
+            var http = new HttpClient();
             var toaster = Locator.Current.GetService<JwtTokenService>();
 
             http.DefaultRequestHeaders.Add("X-Api-Key", ConfigurationManager.AppSettings["X-Api-Key"]);
