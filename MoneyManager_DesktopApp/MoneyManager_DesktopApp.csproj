@@ -25,9 +25,21 @@
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.18" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.18" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0-preview2" />
+        <PackageReference Include="Markdown.Avalonia" Version="0.10.14" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.3.23174.8" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0-preview.3.23174.8" />
         <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\CategoryTab.axaml.cs">
+        <DependentUpon>CategoryTab.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\AddCategoryWindow.axaml.cs">
+        <DependentUpon>AddCategoryWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

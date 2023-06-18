@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:MoneyManager_DesktopApp.ViewModels"
+             xmlns:local="clr-namespace:MoneyManager_DesktopApp.Models;assembly=MoneyManager_DesktopApp"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MoneyManager_DesktopApp.Views.CategoryTab"
+             x:DataType="vm:CategoryTabViewModel">
+
+    <Design.DataContext>
+        <vm:AddCategoryWindowViewModel />
+    </Design.DataContext>
+    
+    <DockPanel LastChildFill="True">
+        <Button DockPanel.Dock="Top" Command="{Binding OpenCategoryWindow}">Dodaj</Button>
+
+        <DataGrid DockPanel.Dock="Bottom" Items="{Binding Categories}" AutoGenerateColumns="False"
+                  VerticalAlignment="Stretch" SelectedItem="{Binding SelectedRecord}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

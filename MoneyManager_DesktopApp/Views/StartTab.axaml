@@ -2,9 +2,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Markdown.Avalonia;assembly=Markdown.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MoneyManager_DesktopApp.Views.StartTab">
-    <Grid Background="White">
-        <TextBox>START Tab</TextBox>
-    </Grid>
+    
+    <StackPanel Margin="10" Background="Beige">
+        <avalonia:MarkdownScrollViewer Focusable="True" IsEnabled="True"  >
+            ## **Money manager**
+            
+            To jest aplikacja która pomoże Ci śledzić swój budżet.
+            
+            W zakładce **Panel** możesz zobaczyć swoje wydatki i przychody.
+            
+            W Zakładce **Kategorie** możesz zobaczyć i dodać kategorie dla swoich wydatków i przychodów.
+            
+            Przez zakładkę **Dodaj** możesz utworzyć nowy wydatek lub przychód, który pojawi się w tabeli w zakładce **Panel**.
+        </avalonia:MarkdownScrollViewer>
+    </StackPanel>
+
 </UserControl>

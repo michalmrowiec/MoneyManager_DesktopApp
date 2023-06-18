@@ -97,6 +97,23 @@
                     </Style>
                 </Button.Styles>
             </Button>
+            <Button Margin="5 5 5 0"
+                    HorizontalAlignment="Stretch"
+                    Height="70"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center" 
+                    CornerRadius="5"
+                    Content="Kategorie"
+                    Command="{Binding OpenCategoryView}">
+                <Button.Background>
+                    <SolidColorBrush Color="Azure" Opacity="0.8"></SolidColorBrush>
+                </Button.Background>
+                <Button.Styles>
+                    <Style Selector="Button:pointerover /template/ ContentPresenter">
+                        <Setter Property="Background" Value="Azure"></Setter>
+                    </Style>
+                </Button.Styles>
+            </Button>
         </StackPanel>
         <ContentControl Name="MainView" Content="{Binding MainViewContent}" Grid.Column="1"></ContentControl>
     </Grid>

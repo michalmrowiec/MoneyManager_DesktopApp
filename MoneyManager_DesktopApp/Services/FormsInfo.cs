@@ -32,5 +32,7 @@ public class FormsInfo
         }
     }
 
+    public bool CategoryWindowIsOpen { get; set; }
+
     private void NotifyStateChanged() => OnChange?.Invoke();
 }

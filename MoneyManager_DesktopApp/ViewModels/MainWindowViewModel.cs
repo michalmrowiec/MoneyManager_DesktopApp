@@ -84,6 +84,12 @@ public class MainWindowViewModel : INotifyPropertyChanged
     {
         MainViewContent = new Dashboard();
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MainViewContent)));
+    }   
+    
+    private void OpenCategoryView()
+    {
+        MainViewContent = new CategoryTab();
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MainViewContent)));
     }
 
     private void OpenStartTabView()
